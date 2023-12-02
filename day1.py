@@ -1,6 +1,6 @@
 import re
 
-number_mappings = {
+replacements = {
     "one": "o1ne",
     "two": "t2wo",
     "three": "th3ree",
@@ -13,22 +13,27 @@ number_mappings = {
 }
 
 def read_file(file_path):
-    numbers = []
     with open(file_path, 'r') as file:
-        for line in file:
-            line = line.strip()
-            line = ' '.join([number_mappings.get(word, word) for word in line.split()])
+        lines = file.readlines()
+        numbers = []
+        for line in lines:
+            for key, value in replacements.items():
+                line = line.replace(key, value)
             number = extract_number(line)
             if number:
                 numbers.append(number)
     return numbers
 
 def extract_number(line):
-    numbers = re.findall(r'\d+', line)
+    number = re.sub(r'\D', '', line)
     reduced_number = ""
-    if numbers:
-        number = numbers[0]
-        reduced_number = number[:1] + number[-1:]
+    if len(number) == 1:
+        reduced_number = number + number
+    elif len(number) <=2:
+        reduced_number = number
+    else:
+        reduced_number = number[0] + number[-1]
+    print(reduced_number)
     return reduced_number
 
 def calculate_sum(numbers):
