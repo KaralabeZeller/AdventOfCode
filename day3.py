@@ -1,8 +1,6 @@
 import re
 from functools import reduce
 
-used_symbols = ['*', '#', '+', '$', '-', '/', '&', '=', '@', '%']
-
 class NumberInfo:
     def __init__(self, number, start_index, end_index, row_index):
         self.number = number
@@ -40,7 +38,7 @@ def extract_numbers(text):
                     row_numbers.append(NumberInfo(number, number_start, col_idx - 1, row_idx))
                     number_start = None
 
-                if char in used_symbols:
+            if not char.isdigit() and char != '.':
                     symbols[row_idx].append(SymbolInfo(char, col_idx, row_idx))
 
         if number_start is not None:
