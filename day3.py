@@ -96,6 +96,4 @@ for row_idx, row_symbols in symbols.items():
         if len(my_neighbors) == 2:
             sum_gear_ratio += reduce(lambda x, y: x.number * y.number, my_neighbors)
 
-total_sum = sum(number.number for id in unique_numbers_per_row for number in unique_numbers_per_row[id])
-
 print("SUM gear ratio: ", sum_gear_ratio)
