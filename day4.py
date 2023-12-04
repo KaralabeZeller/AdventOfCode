@@ -2,6 +2,13 @@ import re
 
 data = {}
 
+match_lengths = {}
+instances_total = {}
+sum_instances = 0
+
+def add_or_init_instance(key, num):
+    instances_total[key] = instances_total.get(key, 0) + num
+    
 with open("input.txt", "r") as file:
     lines = file.readlines()
 
@@ -12,35 +19,18 @@ for line in lines[::]:
     group1 = list(map(int, groups[0].strip().split()))
     group2 = list(map(int, groups[1].strip().split()))
 
-    matches = []
-    for number in group1:
-        if number in group2:
-            matches.append(number)
+    matches = [number for number in group1 if number in group2]
 
-    data[card_id] = matches
-
-match_lengths = {}
-
-for card_id, matches in data.items():
     match_length = len(matches)
     match_lengths[card_id] = match_length
-
-instances_total = {}
-
-def add_or_init_instance(key):
-    instances_total[key] = instances_total.get(key, 0) + 1
     
-for card_id, length in match_lengths.items():
     card_id_num = int(card_id)
 
-    add_or_init_instance(card_id_num)  
+    add_or_init_instance(card_id_num, 1)  
     
-    for _ in range(instances_total[card_id_num]):
-        for num in range(card_id_num + 1, card_id_num + length + 1):
-            add_or_init_instance(num)
+    for num in range(card_id_num + 1, card_id_num + match_length + 1):
+        add_or_init_instance(num, instances_total[card_id_num])
 
-sum_instances = 0
-for key, value in instances_total.items():
-    sum_instances += value
-    
+    sum_instances += instances_total[card_id_num]
+
 print("SUM: ", sum_instances)
