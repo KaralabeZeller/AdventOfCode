@@ -1,7 +1,5 @@
 import re
 
-data = {}
-
 instances_total = {}
 sum_instances = 0
 
