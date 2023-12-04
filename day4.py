@@ -25,19 +25,19 @@ for card_id, matches in data.items():
     match_length = len(matches)
     match_lengths[card_id] = match_length
 
-instances = {}
 instances_total = {}
-for i in range(0, len(match_lengths) + 1):
-    instances_total[i] = 0
+
+def add_or_init_instance(key):
+    instances_total[key] = instances_total.get(key, 0) + 1
     
 for card_id, length in match_lengths.items():
     card_id_num = int(card_id)
 
-    instances_total[card_id_num] += 1   
+    add_or_init_instance(card_id_num)  
     
-    for times in range(0, instances_total[card_id_num]):
+    for _ in range(instances_total[card_id_num]):
         for num in range(card_id_num + 1, card_id_num + length + 1):
-            instances_total[num] += 1
+            add_or_init_instance(num)
 
 sum_instances = 0
 for key, value in instances_total.items():
