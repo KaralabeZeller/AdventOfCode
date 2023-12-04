@@ -2,7 +2,6 @@ import re
 
 data = {}
 
-match_lengths = {}
 instances_total = {}
 sum_instances = 0
 
@@ -20,9 +19,7 @@ for line in lines[::]:
     group2 = list(map(int, groups[1].strip().split()))
 
     matches = [number for number in group1 if number in group2]
-
     match_length = len(matches)
-    match_lengths[card_id] = match_length
     
     card_id_num = int(card_id)
 
