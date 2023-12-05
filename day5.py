@@ -22,7 +22,6 @@ print("Seeds:", seeds)
 
 def check_interval(seed, iteration):
     return_seed = seed
-    return_iteration = iteration + 1
 
     current_list = category_maps[iteration]
     for item in current_list:
@@ -38,7 +37,7 @@ def check_interval(seed, iteration):
     if return_iteration >= len(category_maps) :
         return return_seed
     else:
-        return check_interval(return_seed, return_iteration)
+        return check_interval(return_seed, iteration + 1)
 
 def seed_processor(from_value, to_value):
     min_location = 9999999999
