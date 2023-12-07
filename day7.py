@@ -58,17 +58,17 @@ def is_lower(a, b, joker):
     return False
 
 def calculate_score(J):
-    if J:
-        card_values['J'] = 1
+
+    card_values['J'] = 1
     for i in range(1, len(hands)):
         current_hand, current_value = hands[i]
-        j = i - 1
-        previous_hand, previous_value = hands[j]
-        while j >= 0 and is_lower(current_hand, previous_hand, J):
-            hands[j + 1] = hands[j]
-            j -= 1
-            previous_hand, previous_value = hands[j]
-        hands[j + 1] = (current_hand, current_value)
+        joker = i - 1
+        previous_hand = hands[joker][0]
+        while joker>= 0 and is_lower(current_hand, previous_hand, J):
+            hands[joker + 1] = hands[joker]
+            joker -= 1
+            previous_hand = hands[joker][0]
+        hands[joker + 1] = (current_hand, current_value)
     
     score = 0
     for i, hand in enumerate(hands):
@@ -76,7 +76,4 @@ def calculate_score(J):
     
     return score
 
-print('Without Jokers')
-print(calculate_score(False))
-print('With Jokers')
-print(calculate_score(True))
+print("SUM: ", calculate_score(True))
